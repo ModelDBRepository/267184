@@ -1,0 +1,24 @@
+//---------------------------------------------------------------------------------------------------------------------------------//
+// Restore the output state of the simulation (t, voltage, state and event values)                                                 //					
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+// Read in the file that contains all the information from the previous state
+objref svstate, f1
+svstate = new SaveState()
+f1 = new File("states.dat")
+svstate.fread(f1)
+
+// Run the original/standard NEURON initialization, followed by the restoration of states from
+//  the previous simulation
+proc init() {
+    finitialize()
+    svstate.restore()
+	tstop = t + 100     //Run the simulation for 100ms from the time the previous simulation left off from
+    if (cvode.active()) {
+        cvode.re_init()
+    } else {
+        fcurrent()
+    }
+    frecord_init()
+}
+

@@ -1,0 +1,13 @@
+//---------------------------------------------------------------------------------------------------------------------------------//
+// Save the output state of the simulation (t, voltage, state and event values)                                                    //					
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+// Create a save state object that saves the present value of all states
+objref svstate
+svstate = new SaveState()
+svstate.save()
+
+// Save state information for use in later sessions
+objref f	// declare object reference
+f = new File("states.dat")
+svstate.fwrite(f)
